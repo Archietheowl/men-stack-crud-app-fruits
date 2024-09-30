@@ -1,0 +1,49 @@
+
+
+body {
+    background-color: black;
+    color: white;
+    font-family: "Space Grotesk", sans-serif;
+}
+
+h1{
+    text-align: center;
+    font-size: 5vw;
+}
+
+h2{
+    text-align: center;
+}
+
+a{
+    margin: 5px;
+    border: solid #FFE81F 3px;
+    padding: 5px;
+    border-radius: 15px;
+    background-color: white;
+    text-align: center;
+    font-size: 2vw;
+    color: black;
+    width: fit-content;
+}
+
+div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: black;
+}
+div a{
+    color: black;
+    border: none
+}
+
+.gifdiv {
+    display: flex;
+    background-color: black;
+}
+
+img {
+    width:40vw;
+}

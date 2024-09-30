@@ -1,0 +1,145 @@
+
+
+body {
+    background-image: url("/stylesheets/images/starwars-background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: 'hidden';
+    position: relative;
+}
+
+h1{
+    text-align: center;
+    font-size: 5vw;
+    font-family: "Space Grotesk", sans-serif;
+}
+
+h2{
+    text-align: center;
+    font-family: "Space Grotesk", sans-serif;
+}
+
+nav{
+    display: flex;
+    margin: 0px;
+    padding: 20px 0px 20px 20px;
+    background-color: rgba(2, 2, 2, 0.9);
+    height: 30px;
+    font-size: 2em;
+    justify-content: flex-start;
+    
+    
+    
+}
+nav a{
+    display: flex;
+    margin-right: 10%;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 900;
+    color: #ffc909;
+    text-decoration: none;
+    font-weight: heavy;
+}
+
+p{
+    font-size: 2vw;
+    color: #ffc909;
+    font-family: "Space Grotesk", sans-serif;
+    text-align: justify;
+    font-weight: bolder;
+}
+
+ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(2, 2, 2, 0.9);
+    width: 25%;
+    text-align: center;
+}
+
+li{
+    font-size: 2em;
+    padding: 10px;
+    list-style: none;
+    line-height: 3vw;
+    text-align: center;
+    color: #ffc909;
+    font-family: "Space Grotesk", sans-serif;
+    
+}
+li a{
+    color: #ffc909;
+    text-decoration: none;
+}
+li a:hover{
+    text-decoration: underline;
+}
+
+.ul-div{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.wrapper{
+    background-color: rgba(2, 2, 2, 0.9);
+    display: flex;
+    padding: 10px;
+    height: 100%;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.sroll-text{
+    font-size: 3vw;
+    line-height: 1.5em;
+    font-weight: bold;
+    text-align: justify;
+    position: relative;
+    color: #ffc909;
+    position: relative;
+    animation: scroll 60s linear forwards;
+}
+
+.wrapper h1, h2{
+    text-align: center;
+    color: #ffc909
+}
+
+button{
+    color: black;
+    padding: 0px 10px 0px 10px;
+    border-radius: 10px;
+    background-color: white;
+    border: solid white 0;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1em;
+    cursor: pointer;
+}
+button:hover {
+    background-color: black;
+    color: white;
+}
+.btn{
+    border: sold #ffc909 10px;
+    padding: 0px 10px 0px 10px;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+.btn:hover{
+    background-color: black;
+    color: white;
+}
+.btn a{
+    color: black;
+    font-family: "Space Grotesk", sans-serif;
+}
+.btn a:hover{
+    background-color: black;
+    color: white;
+    text-decoration: none;
+}

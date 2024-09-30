@@ -3,9 +3,52 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Character Show Page</title>
+    <title><%= character.name %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');</style>
   </head>
+  <%- include('../partials/header') %>
   <body>
-    <h1>Here Is Your Character</h1>
+    <div class="ul-div">
+      <ul>
+        <li><h1><%= character.name %></h1></li>
+        <li>
+          Jedi Powers: <%= character.jediPowers %>
+        </li>
+        <li>
+          Dark Side: <%= character.darkSide %>
+        </li>
+        <li>
+          Greed: <%= character.greed %>
+        </li>
+        <li>
+          Courage: <%= character.courage %>
+        </li>
+        <li>
+          Flying Skills: <%= character.flyingSkills %>
+        </li>
+        <li>
+          Hall of Fame: <%= character.hallOfFame %>
+        </li>
+        <li>
+          Force User: <%= character.forceUser %>
+        </li>
+        <li>
+          <div class="btn">
+            <form action="/characters/<%=character._id%>?_method=DELETE" method="POST" ></form>
+              <button type="submit">Delete <%= character.name %></button>
+            </form>
+          </div>
+        </li>
+        <li>
+          <div class="btn">
+            <a href="/characters/<%=character._id%>/edit">Edit <%= character.name %></a>
+          </div>
+        </li>
+      </ul>
+     
+
+      
+    </div>
   </body>
 </html>

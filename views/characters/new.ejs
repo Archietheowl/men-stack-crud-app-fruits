@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');</style>
 </head>
+<%- include('../partials/header') %>
 <body>
     <h1>THE NEW PAGE</h1>
+    <a href="/">Return Home</a>
     <form action="/characters" method="POST">
         <label for="name">Character Name</label>
         <input type="text" name="name" id="name">
