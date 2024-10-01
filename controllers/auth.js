@@ -25,8 +25,20 @@ router.post('/sign-up', async(req, res) => {
         // if the username is available and the password entires match, HASH THE PASSORD
         req.body.password = bcrypt.hashSync(req.body.password, 10)
         // After password checks attempt to create user
+
         const newUser = await User.create(req.body);
-        return res.redirect('/auth/sign-in')
+
+        // Create a session to keep signed in for redirect
+        req.session.user = {
+            username: newUser.username,
+            _id: newUser._id
+        };
+        //using the save method take our session data from local memory and stores it in the DB
+        req.session.save((err) => {
+            console.log(err)
+            res.redirect("/");
+        });
+
     } catch(error){
         console.log(error)
         if(error.code === 11000){
@@ -65,8 +77,11 @@ router.post("/sign-in", async (req, res) => {
         req.session.user = {
             username: userInDatabase.username,
         };
-        return res.redirect('/');
-
+        //The save() takes the information above that is storred in memory and savs it in the store (MongoDB)
+        //This request is async since it's accross the network, so a callback is provided that will be excecuted on completetion
+        req.session.save(()=>{
+            return res.redirect('/');
+        })
     } catch(error) {
     console.log(error)
     return res.status(500).send('<h1>An error occured</h1>')
@@ -75,8 +90,14 @@ router.post("/sign-in", async (req, res) => {
 
 //Sign Out Route
 router.get('/sign-out', (req, res) => {
-    req.session.destroy();
-    res.redirect("/")
+    // Destroy existing session
+    req.session.destroy((err) => {
+        if(err){
+            console.log(err)
+            return res.status(500).send('<h1>An error occured</h1>')
+        }
+    });
+    return res.redirect("/");
 })
 
 // *-- Export the Router

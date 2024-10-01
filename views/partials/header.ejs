@@ -1,6 +1,12 @@
 <nav>
     <a href="/">Home</a>
     <a href="/characters/">Character Index</a>
+    <% if (user) { %>
     <a href="/characters/new/">Add A Character</a>
-
+    <a href="/vip-lounge">VIP Lounge</a>
+    <a href="/auth/sign-out">Sign Out</a>
+    <% } else { %>
+    <a href="/auth/sign-up">Sign Up</a>
+    <a href="/auth/sign-in">Sign In</a>
+    <% } %>
 </nav>

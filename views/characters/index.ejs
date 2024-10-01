@@ -12,10 +12,9 @@
   <%- include('../partials/header') %>
   <body>
     <h1>The Characters</h1>
-
     <div class="ul-div">
       <ul>
-          <% characters.forEach(Character => { %>
+          <% allCharacters.forEach(Character => { %>
               <li><a href="/characters/<%= Character._id %>"><%= Character.name %></a></li>
           <% }) %> 
       </ul>

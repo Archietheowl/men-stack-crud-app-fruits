@@ -12,6 +12,7 @@ h1{
     text-align: center;
     font-size: 5vw;
     font-family: "Space Grotesk", sans-serif;
+    margin-top: 0;
 }
 
 h2{
@@ -23,22 +24,26 @@ nav{
     display: flex;
     margin: 0px;
     padding: 20px 0px 20px 20px;
-    background-color: rgba(2, 2, 2, 0.9);
+    background-color: rgba(2, 2, 2, 0.7);
     height: 30px;
     font-size: 2em;
-    justify-content: flex-start;
-    
-    
-    
+    justify-content: flex-start; 
+    border-radius: 15px;   
 }
 nav a{
     display: flex;
-    margin-right: 10%;
+    margin-right: 30px;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 900;
-    color: #ffc909;
+    font-size: 2vw;
+    color: white;
     text-decoration: none;
-    font-weight: heavy;
+    padding-right: 30px;
+    border-right: solid #ffc909 2px;
+}
+nav a:hover{
+    color: #ffc909;
+    text-decoration: underline;
 }
 
 p{
@@ -84,12 +89,15 @@ li a:hover{
 }
 
 .wrapper{
-    background-color: rgba(2, 2, 2, 0.9);
+    background-color: rgba(2, 2, 2, 0.7);
     display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 10px;
     height: 100%;
     width: 60%;
-    margin: 0 auto;
+    margin: 50px auto;
+    border-radius: 15px;
 }
 
 .sroll-text{
@@ -142,4 +150,12 @@ button:hover {
     background-color: black;
     color: white;
     text-decoration: none;
+}
+
+.scroll-text p{
+    text-align: center;
+    font-size: 1em;
+}
+.scroll-text a {
+    color: white;
 }

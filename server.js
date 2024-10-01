@@ -1,46 +1,55 @@
-const express = require('express')
-const morgan = require('morgan')
-const mongoose = require('mongoose')
-const methodOverride = require("method-override")
-const session = require('express-session')
-require('dotenv/config')
+//Requirements
+const express = require('express');
+const morgan = require('morgan');
+const mongoose = require('mongoose');
+const methodOverride = require("method-override");
+const session = require('express-session');
+const MongoStore = require("connect-mongo");
+const authController = require('./controllers/auth.js')
+require('dotenv/config');
+
+
+
+//Middleware functions
+const isSignedIn = require('./middleware/is-signed-in.js')
+const passUserToView = require('./middleware/pass-user-to-view.js');
 
 //* Routers/Controllers
 const charactersRouter = require('./controllers/characters-controller.js')
-// think this is redundant:::::::const authRouter = require('./controllers/auth.js')
+const authRouter = require('./controllers/auth.js')
 
 // Variables
 const app = express()
 const port = 3000
-const authController = require('./controllers/auth.js')
 
 
 //Middleware
-
+//INFO NOTE --- Middleware will always either send a response or next. Some might do either depending on circumstance
+app.use(methodOverride("_method"));
+app.use(express.urlencoded({ extended: false }))
 app.use(express.static('public'));//Testing every single request to check if there's a mach in public folder
 app.use(morgan('dev'))
-app.use(methodOverride("_method"));
-app.use('/characters', charactersRouter)
-app.use(express.urlencoded({ extended: false }))
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    resave: false, //stops it resaving over and over even if there are no changes.
-    saveUninitialized: true // will create a session that does not currently exist in our story
-}))
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGODB_URI,
+    }),
+}));
+//MUST COME UNDER THE SESSION MIDDLEWARE
+app.use(passUserToView);
+app.use(isSignedIn);
+app.use('/characters-controller', charactersRouter)
+app.use('/auth', authRouter)
 
 
 // Route Handlers
 
 //* Landing Page
 app.get('/', (req, res) => {
-    res.render('index.ejs', {
-        user: req.session.user,
-    });
+    res.render('index.ejs');
 });
-
-//* Routers
-app.use('/auth', authController)
-app.use('/characters', charactersRouter)
 
 // VIP ROUTE JUST FOR EXAMPLE
 app.get('/vip-lounge', (req, res) => {
@@ -51,10 +60,10 @@ app.get('/vip-lounge', (req, res) => {
     }
 })
 
-///////TRY TO GET IN THE HABBIT OF THIS ALWAYS BEING YOUR FIRST STEP TO CHECK THE ROUTE IS WORKING
-// app.delete('/characters/:characterId', (req, res) => {
-//     res.send('This is the delete route');
-// });
+//* Routers
+app.use('/auth', authController)
+app.use('/characters', charactersRouter)
+
 
 // 404 Handler
 app.get('*', (req, res) => {
@@ -78,3 +87,8 @@ const startServers = async () => {
 }
 
 startServers()
+
+///////TRY TO GET IN THE HABBIT OF THIS ALWAYS BEING YOUR FIRST STEP TO CHECK THE ROUTE IS WORKING
+// app.delete('/characters/:characterId', (req, res) => {
+//     res.send('This is the delete route');
+// });

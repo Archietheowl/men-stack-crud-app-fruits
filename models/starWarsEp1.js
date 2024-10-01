@@ -8,11 +8,20 @@ const swCharacterSchema = new mongoose.Schema({
     courage: { type: Number, required: true },
     flyingSkills: { type: Number, required: true },
     hallOfFame: { type: Number, required: true },
-    forceUser: { type: Boolean, required: true}
+    forceUser: { type: Boolean, required: true},
+    creator: {
+        type: mongoose.Schema.Types.ObjectId, 
+        required: true,
+        ref: 'User',}
 })
 
 const SWCharacter = mongoose.model('SWCharacter', swCharacterSchema)
 
-
 module.exports = SWCharacter
 
+// To be added
+//oraniser: { type: mongoose.Types.ObjectId, ref: 'User', required: true }
+
+
+
+//Attendees (Users - Referenced Many-to many)

@@ -9,25 +9,15 @@
 </head>
 <%- include('partials/header') %>
 <body>
-<p><a href="/vip-lounge">Get into the VIP Users Only lounge!</a></p>
-<% if(user) { %>
-<h1>Welcome to the app, <%= user.username %>!</h1>
-<p>
-    <a href="/auth/sign-out">Sign Out</a>
-</p>
-<% }else{ %>
-<h1>Welcome to the app, guest.</h1>
-<p>
-    <a href="/auth/sign-up">Sign up</a> or <a href="/auth/sign-in">sign in</a>
-</p>
-<% } %>
     <div class="wrapper">
         <div class="scroll-text">
             <h1>Star Warrs</h1>
-            <h1>A long time ago in a galaxy far, far away...</h1>
-            <p>The was a CRUD side dedicated to Star Wars characters from Episode I</p>
-            <p>Have a look around: Check out our index of characters, Add your own favourite, Edit existing characters, or Delete some</p>
-            <p>But be warned, if you strike them down they may become more powerful than you can possibly imagine!</p>
+            <% if(user) { %>
+            <h2>Welcome to the app, <%= user.username %></h2>
+            <% }else{ %>
+            <h2>Welcome to the app, guest</h2>
+            <% } %>
+            <h2>A long time ago in a galaxy far, far away...</h2>
         </div>
     </div>
 </body>

@@ -1,0 +1,17 @@
+ERD Entity relationship diagram
+
+Show the schemas in a table (the data entities)
+Draw lines between associated fields to show a relationship
+
+dbdiagram.io website to create entiry relationship diagrams
+
+
+lines with a 1 at the end show a one relationship one with a grows foot show a many relationship
+
+
+Read up on principles of least cardinality
+
+If saving ids of a many relationship need to set up the dable with an array of objects
+
+If you are authenticated you'll always have access to the user data e.g. 
+userID, name etc. aka req.session
