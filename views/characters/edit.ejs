@@ -34,9 +34,6 @@
         <label for="hallOfFame">Hall of Fame</label>
         <input type="text"  value="<%= character.hallOfFame %>" name="hallOfFame" id="hallOfFame">
         <br>
-        <label for="forceUser">Force User</label>
-        <input type="checkbox" name="forceUser" id="forceUser" <% if (character.forceUser) {%>checked<%} %>>
-        <br>
         <button type="submit">Update <%= character.name %> </button>
     </form>
 </body>

@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const methodOverride = require("method-override");
 const session = require('express-session');
 const MongoStore = require("connect-mongo");
-const authController = require('./controllers/auth.js')
 require('dotenv/config');
 
 
@@ -13,6 +12,8 @@ require('dotenv/config');
 //Middleware functions
 const isSignedIn = require('./middleware/is-signed-in.js')
 const passUserToView = require('./middleware/pass-user-to-view.js');
+const allowErrors = require('./middleware/allow-errors.js')
+const initFlashMessages = require('./middleware/init-flash-messages.js')
 
 //* Routers/Controllers
 const charactersRouter = require('./controllers/characters-controller.js')
@@ -37,15 +38,19 @@ app.use(session({
         mongoUrl: process.env.MONGODB_URI,
     }),
 }));
+app.use('/auth', authRouter)
+
+// Pass flash messages to the view
+app.use(initFlashMessages)
+
 //MUST COME UNDER THE SESSION MIDDLEWARE
 app.use(passUserToView);
-app.use(isSignedIn);
+// app.use(isSignedIn);
 app.use('/characters-controller', charactersRouter)
-app.use('/auth', authRouter)
+
 
 
 // Route Handlers
-
 //* Landing Page
 app.get('/', (req, res) => {
     res.render('index.ejs');
@@ -61,7 +66,7 @@ app.get('/vip-lounge', (req, res) => {
 })
 
 //* Routers
-app.use('/auth', authController)
+app.use('/auth', authRouter)
 app.use('/characters', charactersRouter)
 
 
@@ -79,7 +84,7 @@ const startServers = async () => {
 
         //Server Connection
         app.listen(port, () => {
-            console.log(`Server up and runnong on port ${port}`)
+            console.log(`Server up and running on port ${port}`)
         })
     } catch (error) {
         console.log(error)

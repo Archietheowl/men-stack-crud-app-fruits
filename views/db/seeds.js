@@ -2,10 +2,9 @@
 //const mongoose= require('mongoose')
 //require('dotenv/config')
 
-//console.log(process.env)
-
 // Models
 //const Characters = require('../models/starWarsEp1.js')
+//
 
 
 //Data
@@ -13,7 +12,7 @@ const characterData = require('db/data/data.js')
 //const SWCharacter = require('../../models/starWarsEp1')
 consolelog(characterData)
 
-// //Rn Seeds
+// //Run Seeds
 
 // const runSeeds = async() => {
 //     try{
@@ -25,10 +24,10 @@ consolelog(characterData)
 //         const deletedCharacters = await Characters.deleteMany()
 //         console.log(`${deletedCharacters.deletedCount} characters deleted from the database`)
 
-//         //add new data
+//         //add new character
 //         const character = await SWCharacter.create(characterData)
 //         console.log((`${character.length} characters added to the database`))
-
+// add new user
 
 //         //Close connection to database
 //         await mongoose.connection.close()

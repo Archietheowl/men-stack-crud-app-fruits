@@ -1,7 +1,9 @@
-// Router
+
 const express = require('express')
-const router = express.Router()
 const bcrypt = require('bcryptjs')
+
+// Router
+const router = express.Router()
 
 // Model
 const User = require('../models/user.js')
@@ -25,7 +27,6 @@ router.post('/sign-up', async(req, res) => {
         // if the username is available and the password entires match, HASH THE PASSORD
         req.body.password = bcrypt.hashSync(req.body.password, 10)
         // After password checks attempt to create user
-
         const newUser = await User.create(req.body);
 
         // Create a session to keep signed in for redirect
@@ -36,11 +37,10 @@ router.post('/sign-up', async(req, res) => {
         //using the save method take our session data from local memory and stores it in the DB
         req.session.save((err) => {
             console.log(err)
-            res.redirect("/");
+            return res.redirect("/");
         });
-
     } catch(error){
-        console.log(error)
+        console.log(error.errors)
         if(error.code === 11000){
             const unique = Object.entries(error.keyValue)[0]
             return res.status(422).send(`${unique[0]} "${unique[1]}" already taken`)
@@ -51,7 +51,7 @@ router.post('/sign-up', async(req, res) => {
 
 // *-- Sign In Form
 router.get("/sign-in", (req, res) => {
-    res.render("auth/sign-in.ejs");
+    return res.render("auth/sign-in.ejs");
 });
 
 
@@ -62,31 +62,33 @@ router.post("/sign-in", async (req, res) => {
         const userInDatabase = await User.findOne({ username: req.body.username})
         // Invalidate the request with an "Unauthorized" status if the username is not 
         if(!userInDatabase){
-            return res.send('Login failed. Please try again.')
+            console.log('Username did not match an existing user')
+            return res.status(404).send('Login failed. Please try again.')
         }
         // If passwords do not match send an identical response to the 401 above
-        const validPassword = bcrypt.compareSync(
-            req.body.password,
-            userInDatabase.password
-        );
-        if (!validPassword){
-            return res.send('Login failed. Please try again.')          
+        if (!bcrypt.compareSync(req.body.password, userInDatabase.password)) {
+            console.log('Password did not match')
+            return res.status(401).send('Login failed. Please try again.')
         }
 
         // Create a session to sign the user in
         req.session.user = {
             username: userInDatabase.username,
-        };
-        //The save() takes the information above that is storred in memory and savs it in the store (MongoDB)
-        //This request is async since it's accross the network, so a callback is provided that will be excecuted on completetion
-        req.session.save(()=>{
-            return res.redirect('/');
+            _id: userInDatabase._id
+        }
+
+        // the save() method takes the information above that is stored in memory and saves it in the store (MongoDB)
+        // This request is async since it's across the network, so a callback is provided that will be executed on completion
+        req.session.save((err) => {
+            console.log(err)
+            return res.redirect('/')
         })
-    } catch(error) {
-    console.log(error)
-    return res.status(500).send('<h1>An error occured</h1>')
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send('<h1>An error occurred.</h1>')
     }
-});
+})
 
 //Sign Out Route
 router.get('/sign-out', (req, res) => {

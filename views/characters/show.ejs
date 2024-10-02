@@ -12,42 +12,69 @@
     <div class="ul-div">
       <ul>
         <li><h1><%= character.name %></h1></li>
-        <li>
-          Jedi Powers: <%= character.jediPowers %>
-        </li>
-        <li>
-          Dark Side: <%= character.darkSide %>
-        </li>
-        <li>
-          Greed: <%= character.greed %>
-        </li>
-        <li>
-          Courage: <%= character.courage %>
-        </li>
-        <li>
-          Flying Skills: <%= character.flyingSkills %>
-        </li>
-        <li>
-          Hall of Fame: <%= character.hallOfFame %>
-        </li>
-        <li>
-          Force User: <%= character.forceUser %>
-        </li>
-        <li>
-          <div class="btn">
-            <form action="/characters/<%=character._id%>?_method=DELETE" method="POST" ></form>
+        <!-- If the owner show the delete and edit buttons -->
+        <% if (user !== null && character.creator._id.equals(user._id)) { %>
+          <li><p>You created this character</p></li>
+            <!-- Form to delete character -->  
+          <li>  
+            <form action="/characters/<%= character._id %>?_method=DELETE" method="POST" >
               <button type="submit">Delete <%= character.name %></button>
             </form>
-          </div>
-        </li>
-        <li>
-          <div class="btn">
-            <a href="/characters/<%=character._id%>/edit">Edit <%= character.name %></a>
-          </div>
-        </li>
+          </li>
+          <li>
+            <!-- Link to edit form -->
+            <div class="btn">
+              <a href="/characters/<%=character._id%>/edit">Edit <%= character.name %></a>
+            </div>
+          </li>  
+      <% } else { %>
+            <li><p>This is an event by <%= event.organiser.username %></p></li>  
+      <% } %>
+        <li>Jedi Powers: <%= character.jediPowers %></li>
+        <li>Dark Side: <%= character.darkSide %></li>
+        <li>Greed: <%= character.greed %></li>
+        <li>Courage: <%= character.courage %></li>
+        <li>Flying Skills: <%= character.flyingSkills %></li>
+        <li>Hall of Fame: <%= character.hallOfFame %></li>
+        <li>Force User: <%= character.forceUser %></li>
       </ul>
-     
+            
+        <!-- View Comments -->
+        <h2>Comments</h2>
+        
+        <% if (character.comments.length > 0) { %>
+        <div class="comments">
+          <% character.comments.forEach(comment => { %>
+            <div class="comment">
+              <p>
+                <strong><%= comment.user.username %></strong> <small><%= new Date(comment.createdAt).toDateString() %></small><br>
+                <%= comment.text %>
+              </p>
+              <!-- Show Delete Button and allow to delete the post IF you are the owner -->
+              <% if (user && comment.user._id.equals(user._id)) { %>
+                <form action="/characters/<%= character._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                  <button type="submit">Delete</button>
+                </form>
+              <% } %>
+            </div>
+          <% }) %>
+      <% } else { %>
+        <p>There are no comments yet.</p>
+      <% } %>
 
+        <!-- Write a comment -->
+        <% if (user) { %>
+        <form class="form" action="/characters/<%= character._id %>/comments" method="POST">
+          <label for="text">Text:</label>
+          <input type="text" name="text" id="text">
+          <% if (message) { %>
+            <p><small class="error"><%= message %></small></p>
+          <% } %> 
+          <button class="btn" type="submit">Add Comment</button>
+        </form>
+      <% } else { %>
+        <p><a class="link" href="/auth/sign-in">Sign in</a> to leave a comment</p>
+      <% } %>
       
     </div>
   </body>
